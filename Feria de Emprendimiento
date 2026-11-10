@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feria Empresarial - Grupo 4 Cipas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            overflow: hidden;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 30px 25px;
+        }
+
+        .product-image {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 25px;
+            transition: transform 0.3s;
+        }
+
+        .product-image:hover {
+            transform: scale(1.02);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .prices-text {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .prices-text h2 {
+            color: #2d3436;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .prices-text p {
+            color: #636e72;
+            font-size: 1.1em;
+            margin: 8px 0;
+        }
+
+        .prices-text .price-highlight {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .question-section {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .question-section h3 {
+            color: #2d3436;
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 45px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(17, 153, 142, 0.4);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+        }
+
+        .btn-no:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(235, 51, 73, 0.4);
+        }
+
+        .yes-section {
+            display: none;
+            margin-top: 30px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .yes-section.active {
+            display: block;
+        }
+
+        .yes-section h3 {
+            text-align: center;
+            color: #2d3436;
+            margin-bottom: 25px;
+            font-size: 1.4em;
+        }
+
+        .yes-message {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .yes-message h3 {
+            color: #155724;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .yes-message p {
+            color: #155724;
+            font-size: 1.1em;
+        }
+
+        .no-message {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            margin-top: 20px;
+            animation: bounceIn 0.6s;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .no-message.active {
+            display: block;
+        }
+
+        .no-message h3 {
+            color: #2d3436;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .no-message p {
+            color: #636e72;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #2d3436;
+            color: white;
+            text-align: center;
+            padding: 20px 15px;
+            font-size: 0.95em;
+            border-top: 3px solid #667eea;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+
+        .footer .university {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #ffeaa7;
+        }
+
+        .footer .program {
+            color: #dfe6e9;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 30px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .prices-text h2 {
+                font-size: 1.5em;
+            }
+
+            .prices-text p {
+                font-size: 1em;
+            }
+
+            .question-section h3 {
+                font-size: 1.3em;
+            }
+
+            .btn {
+                padding: 12px 35px;
+                font-size: 1em;
+                width: 100%;
+            }
+
+            .yes-section h3 {
+                font-size: 1.2em;
+            }
+
+            .footer {
+                padding: 15px 10px;
+                font-size: 0.9em;
+            }
+
+            .footer .university {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎪 Feria Empresarial</h1>
+            <p>Grupo 4 - Cipas</p>
+        </div>
+
+        <div class="content">
+            <!-- IMAGEN 1 -->
+            <div class="product-image">
+                <img src="imagen1.jpg" alt="Productos Cipas">
+            </div>
+
+            <!-- PRECIOS -->
+            <div class="prices-text">
+                <h2>¡Deliciosos Productos Cipas!</h2>
+                <p>🥪 Sándwich: <span class="price-highlight">$3.000</span></p>
+                <p>🥤 Combo (Sándwich + Jugo): <span class="price-highlight">$5.000</span></p>
+            </div>
+
+            <!-- PREGUNTA -->
+            <div class="question-section" id="question1">
+                <h3>¿Quieres un sándwich?</h3>
+                <div class="button-group">
+                    <button class="btn btn-yes" onclick="showYesSection()">Sí</button>
+                    <button class="btn btn-no" onclick="showNoMessage()">No</button>
+                </div>
+            </div>
+
+            <!-- SECCIÓN SI DICE SÍ - SOLO IMAGEN 2 -->
+            <div class="yes-section" id="yesSection">
+                <!-- IMAGEN 2 -->
+                <div class="product-image">
+                    <img src="imagen2.jpg" alt="Información adicional">
+                </div>
+                
+                <div class="yes-message">
+                    <h3>✅ ¡Genial!</h3>
+                    <p>Te esperamos en nuestro stand</p>
+                </div>
+            </div>
+
+            <!-- MENSAJE SI DICE NO -->
+            <div class="no-message" id="noMessage">
+                <h3>Gracias por su interés</h3>
+                <p>🐕 chupen al perro 🐕</p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p class="university">Universidad del Tolima</p>
+            <p class="program">Administración Financiera</p>
+        </div>
+    </div>
+
+    <script>
+        function showYesSection() {
+            document.getElementById('question1').style.display = 'none';
+            document.getElementById('yesSection').classList.add('active');
+        }
+
+        function showNoMessage() {
+            document.getElementById('question1').style.display = 'none';
+            document.getElementById('noMessage').classList.add('active');
+        }
+    </script>
+</body>
+</html>
